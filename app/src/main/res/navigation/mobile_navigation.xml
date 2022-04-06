@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/nav_inicio">
+
+    <fragment
+        android:id="@+id/nav_inicio"
+        android:name="pmdm.ar.tryexamendual.ui.inicio.InicioFragment"
+        android:label="Inicio"
+        tools:layout="@layout/fragment_inicio" >
+        <action
+            android:id="@+id/action_nav_inicio_to_navigation_adivina"
+            app:destination="@id/navigation_adivina" />
+        <action
+            android:id="@+id/action_nav_inicio_to_nav_tresEnRaya"
+            app:destination="@id/navigation_tres" />
+    </fragment>
+
+    <navigation android:id="@+id/navigation_adivina"
+        app:startDestination="@id/nav_adivina">
+        <fragment
+            android:id="@+id/nav_adivina"
+            android:name="pmdm.ar.tryexamendual.ui.adivina.AdivinaFragment"
+            android:label="adivina"
+            tools:layout="@layout/fragment_adivina" >
+            <action
+                android:id="@+id/action_nav_adivina_to_scoreFragment"
+                app:destination="@id/scoreFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/scoreFragment"
+            android:name="pmdm.ar.tryexamendual.ui.adivina.ScoreFragment"
+            android:label="ScoreFragment"
+            tools:layout="@layout/score_fragment">
+            <action
+                android:id="@+id/action_scoreFragment_to_nav_adivina"
+                app:destination="@id/nav_adivina" />
+        </fragment>
+    </navigation>
+    <navigation android:id="@+id/navigation_tres"
+        app:startDestination="@id/nav_tresEnRaya">
+        <fragment
+            android:id="@+id/nav_tresEnRaya"
+            android:name="pmdm.ar.tryexamendual.ui.tresEnRaya.TresEnRayaFragment"
+            android:label="tresEnRaya"
+            tools:layout="@layout/fragment_tres_en_raya" />
+    </navigation>
+</navigation>
