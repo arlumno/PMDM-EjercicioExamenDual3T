@@ -1,16 +1,25 @@
 package pmdm.ar.tryexamendual.ui.tresEnRaya
 
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class TresEnRayaViewModel : ViewModel() {
 
     // Definimos 2 jugadores identificados por los caracteres 'X' y 'O', que serán los que se escriban en la celda
+    var tablero = MutableLiveData(
+                    Array(3) {
+                            arrayOfNulls<Celda>(3)
+                        }
+                    )
+
     enum class Jugador { X, O }
 
-    internal class Celda {
+    class Celda {
         var value: Jugador? =
             null // Cada celda puede estar vacía o con el valor de un jugador ('O' o 'X')
     }
+
 
     private val celdas = Array(3) {
         arrayOfNulls<Celda>(
@@ -30,18 +39,17 @@ class TresEnRayaViewModel : ViewModel() {
 
     private var estado: GameState? = null
 
-    private var jugadorEnTurno: Jugador? = null
+    var jugadorEnTurno = MutableLiveData<Jugador>()
+//    private var jugadorEnTurno: Jugador? = null
 
-
-    fun Tablero() {
+    init {
         reiniciar()
     }
-
 
     fun reiniciar() {
         clearCells()
         ganador = null
-        jugadorEnTurno = Jugador.X
+        jugadorEnTurno.value= Jugador.X
         estado = GameState.JUGANDO
     }
 
@@ -68,8 +76,9 @@ class TresEnRayaViewModel : ViewModel() {
     fun marcar(row: Int, col: Int) {
 //        if (!isValida(row, col)) return Unit // Celda inválida (la vista ya no debería permitirlo
 //        if (estado != GameState.TERMINADO)// No se sigue marcando si el juego ha terminado
+        Log.e("[Ar...2]",jugadorEnTurno.value.toString())
         if (estado != GameState.TERMINADO && isValida(row, col)) {
-            val jugadorQueMovio = jugadorEnTurno
+            val jugadorQueMovio = jugadorEnTurno.value
             celdas[row][col]!!.value = jugadorQueMovio
             if (isMovimientoGana(jugadorQueMovio, row, col)) {
                 estado = GameState.TERMINADO
@@ -90,9 +99,11 @@ class TresEnRayaViewModel : ViewModel() {
     }
 
     private fun isValida(row: Int, col: Int): Boolean {
-        return if (isOutOfBounds(row) || isOutOfBounds(col) ||
+        var valid = true
+        if (isOutOfBounds(row) || isOutOfBounds(col) ||
             isCeldaConValor(row, col)
-        ) false else true
+        ) valid = false
+        return valid
     }
 
     private fun isOutOfBounds(idx: Int): Boolean {
@@ -119,6 +130,6 @@ class TresEnRayaViewModel : ViewModel() {
     }
 
     private fun cambiarTurno() {
-        jugadorEnTurno = if (jugadorEnTurno == Jugador.X) Jugador.O else Jugador.X
+        jugadorEnTurno.value= if (jugadorEnTurno.value == Jugador.X) Jugador.O else Jugador.X
     }
 }

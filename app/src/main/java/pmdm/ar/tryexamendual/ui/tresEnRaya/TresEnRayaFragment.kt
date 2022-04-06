@@ -60,17 +60,20 @@ class TresEnRayaFragment : Fragment() {
         val tag = button.tag.toString().toCharArray()
         val row = tag[0].digitToInt()
         val col = tag[1].digitToInt()
-        Log.e("[Ar...]",row.toString() + " / " + col.toString())
+      //  Log.e("[Ar...]",row.toString() + " / " + col.toString())
         viewModel.marcar(row, col)
 
 //        viewModel.marcar(row, col)?.let {  //jugadorQueMovio ->
-//            button.text = it.toString()
+
 //            viewModel.ganador?.let { // Comprobamos si el movimiento ha generado un ganador
 //                findNavController().navigate(JuegoFragmentDirections.actionNavDest1ToNavDest2(it.toString()))
 //                binding.winnerPlayerLabel.text = it.toString()
 //                binding.winnerPlayerViewGroup.visibility = View.VISIBLE
 //            }
 //        }
+        viewModel.jugadorEnTurno.observe(viewLifecycleOwner){
+                Log.e("[Ar...]",it.toString())
+        }
     }
 
     private fun reset() {
