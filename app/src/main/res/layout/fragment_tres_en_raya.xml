@@ -30,6 +30,7 @@
             android:rowCount="3">
 
             <Button
+                tools:text="X"
                 style="@style/tictactoebutton"
                 android:tag="00" />
 

@@ -45,6 +45,14 @@
             android:id="@+id/nav_tresEnRaya"
             android:name="pmdm.ar.tryexamendual.ui.tresEnRaya.TresEnRayaFragment"
             android:label="tresEnRaya"
-            tools:layout="@layout/fragment_tres_en_raya" />
+            tools:layout="@layout/fragment_tres_en_raya" >
+            <action
+                android:id="@+id/action_nav_tresEnRaya_to_scoreTresEnRayaFragment"
+                app:destination="@id/scoreTresEnRayaFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/scoreTresEnRayaFragment"
+            android:name="pmdm.ar.tryexamendual.ui.tresEnRaya.ScoreTresEnRayaFragment"
+            android:label="ScoreTresEnRayaFragment" />
     </navigation>
 </navigation>

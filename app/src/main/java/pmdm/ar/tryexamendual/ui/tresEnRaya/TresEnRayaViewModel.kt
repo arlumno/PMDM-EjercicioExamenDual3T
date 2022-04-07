@@ -33,12 +33,13 @@ class TresEnRayaViewModel : ViewModel() {
         return ganador
     }
 
-    private enum class GameState {
+    enum class GameState {
         JUGANDO, TERMINADO
     }
 
-    private var estado: GameState? = null
-
+    var estado: GameState? = null
+    var lastMove: List<Int>? = null
+    lateinit var lastPlayer: Jugador
     var jugadorEnTurno = MutableLiveData<Jugador>()
 //    private var jugadorEnTurno: Jugador? = null
 
@@ -49,8 +50,10 @@ class TresEnRayaViewModel : ViewModel() {
     fun reiniciar() {
         clearCells()
         ganador = null
-        jugadorEnTurno.value= Jugador.X
         estado = GameState.JUGANDO
+        jugadorEnTurno.value= Jugador.X
+        lastMove = null
+        lastPlayer = Jugador.O
     }
 
     /**
@@ -76,13 +79,13 @@ class TresEnRayaViewModel : ViewModel() {
     fun marcar(row: Int, col: Int) {
 //        if (!isValida(row, col)) return Unit // Celda inválida (la vista ya no debería permitirlo
 //        if (estado != GameState.TERMINADO)// No se sigue marcando si el juego ha terminado
-        Log.e("[Ar...2]",jugadorEnTurno.value.toString())
         if (estado != GameState.TERMINADO && isValida(row, col)) {
-            val jugadorQueMovio = jugadorEnTurno.value
-            celdas[row][col]!!.value = jugadorQueMovio
-            if (isMovimientoGana(jugadorQueMovio, row, col)) {
+            lastPlayer = jugadorEnTurno.value!!
+            celdas[row][col]!!.value = lastPlayer
+            lastMove = listOf<Int>(row,col)
+            if (isMovimientoGana(lastPlayer, row, col)) {
                 estado = GameState.TERMINADO
-                ganador = jugadorQueMovio
+                ganador = lastPlayer
             } else {
                 cambiarTurno() // Cambia el Jugador en turno
             }

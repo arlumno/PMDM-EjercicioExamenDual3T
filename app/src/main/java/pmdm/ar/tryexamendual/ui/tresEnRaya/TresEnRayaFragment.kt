@@ -11,10 +11,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import pmdm.ar.tryexamendual.R
 import pmdm.ar.tryexamendual.databinding.FragmentTresEnRayaBinding
+import pmdm.ar.tryexamendual.ui.adivina.AdivinaFragmentDirections
 import pmdm.ar.tryexamendual.ui.adivina.AdivinaViewModel
 
 class TresEnRayaFragment : Fragment() {
@@ -60,7 +62,7 @@ class TresEnRayaFragment : Fragment() {
         val tag = button.tag.toString().toCharArray()
         val row = tag[0].digitToInt()
         val col = tag[1].digitToInt()
-      //  Log.e("[Ar...]",row.toString() + " / " + col.toString())
+        Log.e("[Ar...]",row.toString() + " / " + col.toString())
         viewModel.marcar(row, col)
 
 //        viewModel.marcar(row, col)?.let {  //jugadorQueMovio ->
@@ -72,7 +74,20 @@ class TresEnRayaFragment : Fragment() {
 //            }
 //        }
         viewModel.jugadorEnTurno.observe(viewLifecycleOwner){
-                Log.e("[Ar...]",it.toString())
+            Log.e("[Ar...]",viewModel.estado.toString())
+            Log.e("[Ar...]",viewModel.getGanador().toString())
+            var auxBut: Button
+            var tag: String
+            for (i in 0 until binding.buttonGrid.childCount) {
+                auxBut = (binding.buttonGrid.getChildAt(i) as Button)
+                tag = (viewModel.lastMove?.get(0).toString()) + viewModel.lastMove?.get(1).toString()
+                if(auxBut.tag == tag){
+                    auxBut.text = viewModel.lastPlayer.toString()
+                }
+            }
+            viewModel.getGanador()?.let { // Comprobamos si el movimiento ha generado un ganador
+                NavHostFragment.findNavController(this).navigate(TresEnRayaFragmentDirections.);
+            }
         }
     }
 
