@@ -19,7 +19,7 @@ class ScoreTresEnRayaFragment : Fragment() {
 
     //private val viewModel by activityViewModels<ViewModel>()
     private val viewModel: TresEnRayaViewModel
-            by navGraphViewModels(R.id.navigation_adivina) {
+            by navGraphViewModels(R.id.navigation_tres) {
                 defaultViewModelProviderFactory
             }
 

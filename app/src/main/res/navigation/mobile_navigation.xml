@@ -53,6 +53,8 @@
         <fragment
             android:id="@+id/scoreTresEnRayaFragment"
             android:name="pmdm.ar.tryexamendual.ui.tresEnRaya.ScoreTresEnRayaFragment"
-            android:label="ScoreTresEnRayaFragment" />
+            android:label="ScoreTresEnRayaFragment"
+            tools:layout="@layout/score_tres_en_raya_fragment"
+        />
     </navigation>
 </navigation>

@@ -41,7 +41,10 @@ class TresEnRayaFragment : Fragment() {
         _binding = FragmentTresEnRayaBinding.inflate(inflater, container, false)
 
         binding.buttonGrid.setOnClickListener(::onCellClicked) // Asignamos comportamiento a los botones
-
+//        Toast.makeText(activity,"here",Toast.LENGTH_SHORT).show()
+        if( viewModel.estado == TresEnRayaViewModel.GameState.TERMINADO){
+            reset()
+        }
         binding.btReset.setOnClickListener(){
             reset()
         }
@@ -86,7 +89,7 @@ class TresEnRayaFragment : Fragment() {
                 }
             }
             viewModel.getGanador()?.let { // Comprobamos si el movimiento ha generado un ganador
-                NavHostFragment.findNavController(this).navigate(TresEnRayaFragmentDirections.);
+                NavHostFragment.findNavController(this).navigate(TresEnRayaFragmentDirections.actionNavTresEnRayaToScoreTresEnRayaFragment());
             }
         }
     }
